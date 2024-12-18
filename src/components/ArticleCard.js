@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Col } from "react-bootstrap";
 
 export const ArticleCard = ({ title, description, imgUrl, url }) => {
