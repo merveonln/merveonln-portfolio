@@ -83,8 +83,7 @@ export const Projects = () => {
         <Row>
           <Col size={12}>
             <TrackVisibility>
-              {({ isVisible }) =>
-              <div className={isVisible ? "animate__animated animate__fadeIn": ""}>
+              <div>
                 <h2>Projects & Articles</h2>
                 <p>This section highlights both my web development projects and the articles I’ve written. My projects focus on building efficient and user-friendly solutions, while my Medium articles cover web development, UI/UX design, and tech trends, sharing insights from my experience and learning.</p>
                 <Tab.Container id="projects-tabs" defaultActiveKey="first">
@@ -96,7 +95,7 @@ export const Projects = () => {
                       <Nav.Link eventKey="second">Articles</Nav.Link>
                     </Nav.Item>
                   </Nav>
-                  <Tab.Content id="slideInUp" className={isVisible ? "animate__animated animate__slideInUp" : ""}>
+                  <Tab.Content>
                     <Tab.Pane eventKey="first">
                       <Row>
                         {
@@ -127,7 +126,7 @@ export const Projects = () => {
                     </Tab.Pane>
                   </Tab.Content>
                 </Tab.Container>
-              </div>}
+              </div>
             </TrackVisibility>
           </Col>
         </Row>
