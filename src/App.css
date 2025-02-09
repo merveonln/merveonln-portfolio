@@ -765,9 +765,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   width: 25vh;
 }
 
-/* .navbar-collapse {
-  flex-grow: none !important;
-} */
+.navbar-collapse {
+  flex-grow: inherit !important;
+}
 
 .footer p {
   font-weight: 400;
