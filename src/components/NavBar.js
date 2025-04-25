@@ -5,7 +5,7 @@ import navIcon2 from '../assets/img/nav-icon2.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
 import navIcon4 from '../assets/img/nav-icon4.svg';
 import navIcon5 from '../assets/img/nav-icon5.svg';
-import CV from '../assets/docs/CV.pdf';
+import CV from '../assets/docs/Merve_Önalan_Frontend_Developer_CV.pdf';
 import logo from '../assets/img/logo.svg';
 
 export const NavBar = () => {
