@@ -17,7 +17,7 @@ export const Banner = () => {
     const handleDownloadCV = () => {
         const link = document.createElement('a');
         link.href = CV; 
-        link.download = 'Merve-Önalan-CV.pdf'; 
+        link.download = 'Merve_Önalan_Frontend_Developer_CV.pdf'; 
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
