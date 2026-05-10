@@ -6,6 +6,7 @@ import projImg3 from "../assets/img/project-img3.png";
 import projImg4 from "../assets/img/project-img4.png";
 import projImg5 from "../assets/img/project-img5.png";
 import projImg6 from "../assets/img/project-img6.png";
+import projImg7 from "../assets/img/project-img7.png";
 import artcImg1 from "../assets/img/article-img1.png";
 import artcImg2 from "../assets/img/article-img2.png";
 import artcImg3 from "../assets/img/article-img3.png";
@@ -52,6 +53,12 @@ export const Projects = () => {
       imgUrl: projImg6,
       url: "https://merveonln-portfolio.netlify.app/",
     },
+    {
+      title: "CorseMaster",
+      description: "Django",
+      imgUrl: projImg7,
+      url: "https://coursemaster-production.up.railway.app/",
+    }
   ];
 
   const articles = [
