@@ -45,6 +45,45 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+## Contact form backend setup
+
+1. Copy [.env.example](.env.example) to `.env`
+2. Fill your SMTP values (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, etc.)
+3. Start backend:
+	- `npm run server`
+4. Start frontend in another terminal:
+	- `npm start`
+
+The contact form now sends `POST` requests to `REACT_APP_API_URL/api/contact`.
+
+## Deploy (Netlify + Render)
+
+### 1) Backend (Render)
+
+- Push this repo to GitHub
+- In Render: **New +** -> **Blueprint** and select this repo (uses [render.yaml](render.yaml))
+- Set these environment variables in Render service:
+	- `CORS_ORIGIN=https://frontend-merve.netlify.app`
+	- `SMTP_HOST=smtp.gmail.com`
+	- `SMTP_PORT=587`
+	- `SMTP_SECURE=false`
+	- `SMTP_USER=frontendmerve@gmail.com`
+	- `SMTP_PASS=YOUR_GMAIL_APP_PASSWORD`
+	- `SMTP_FROM=frontendmerve@gmail.com`
+	- `CONTACT_RECEIVER=frontendmerve@gmail.com`
+
+After deploy, test health URL:
+- `https://YOUR_RENDER_SERVICE.onrender.com/api/health`
+
+### 2) Frontend (Netlify)
+
+- Import same repo in Netlify (config is in [netlify.toml](netlify.toml))
+- Add Netlify environment variable:
+	- `REACT_APP_API_URL=https://YOUR_RENDER_SERVICE.onrender.com`
+- Trigger deploy
+
+Now form submission from Netlify will call your Render backend and emails will arrive at `frontendmerve@gmail.com`.
+
 ### Code Splitting
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)

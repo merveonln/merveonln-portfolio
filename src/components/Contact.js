@@ -3,7 +3,17 @@ import { Container, Row, Col, Toast} from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
-import emailjs from "@emailjs/browser";
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+const CONTACT_ENDPOINTS =
+  process.env.NODE_ENV === "development"
+    ? [
+        "/api/contact",
+        `${window.location.protocol}//${window.location.hostname}:5000/api/contact`,
+        "http://localhost:5000/api/contact",
+        "http://127.0.0.1:5000/api/contact",
+      ]
+    : [API_BASE_URL ? `${API_BASE_URL.replace(/\/$/, "")}/api/contact` : "/api/contact"];
 
 export const Contact = () => {
   const formInitialDetails = {
@@ -18,6 +28,40 @@ export const Contact = () => {
   const [status, setStatus] = useState({});
   const [showToast, setShowToast] = useState(false);
 
+  const postContact = async (payload) => {
+    let lastError = new Error("Server connection failed. Make sure backend is running.");
+
+    for (const endpoint of CONTACT_ENDPOINTS) {
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const rawResponse = await response.text();
+        let data = {};
+        try {
+          data = rawResponse ? JSON.parse(rawResponse) : {};
+        } catch {
+          data = {};
+        }
+
+        if (!response.ok) {
+          throw new Error(data?.message || rawResponse || "Something went wrong, please try again later...");
+        }
+
+        return data;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError;
+  };
+
   const onFormUpdate = (category, value) => {
       setFormDetails({
         ...formDetails,
@@ -28,6 +72,7 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowToast(false);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (
       !formDetails.firstName.trim() ||
@@ -41,32 +86,26 @@ export const Contact = () => {
       return;
     }
 
-    setButtonText("Sending...");
-    
-    const templateParams = {
-      from_name: `${formDetails.firstName} ${formDetails.lastName}`,
-      email: formDetails.email,
-      phone: formDetails.phone,
-      message: formDetails.message,
-    };
+    if (!emailPattern.test(formDetails.email.trim())) {
+      setStatus({ success: false, message: "Please enter a valid email address!" });
+      setShowToast(true);
+      return;
+    }
 
-    emailjs.send(
-      "service_655evuj", 
-      "template_ausbghu", 
-      templateParams,
-      "p-Z2oRS4uIgrb2zCn" 
-    )
-    .then((response) => {
+    setButtonText("Sending...");
+
+    try {
+      await postContact(formDetails);
+
       setStatus({ success: true, message: "Message sent successfully!" });
-      setButtonText("Send");
       setFormDetails(formInitialDetails); 
       setShowToast(true);
-    })
-    .catch((error) => {
-      setStatus({ success: false, message: "Something went wrong, please try again later..." });
-      setButtonText("Send");
+    } catch (error) {
+      setStatus({ success: false, message: error.message || "Server connection failed. Make sure backend is running." });
       setShowToast(true);
-    });
+    } finally {
+      setButtonText("Send");
+    }
   };
 
   return (
