@@ -2,12 +2,14 @@
   "name": "merve-portfolio",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
+    "dotenv": "^17.4.2",
     "express": "^4.21.2",
     "framer-motion": "^11.14.4",
     "nodemailer": "^6.9.16",
@@ -23,6 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
